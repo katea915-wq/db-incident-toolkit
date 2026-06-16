@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DB Incident Report — {{ db_name }}</title>
+  <style>
+    body { font-family: monospace; background: #161925; color: #e0e0e0; padding: 2rem; }
+    h1 { color: #E58C8A; }
+    .meta { color: #6E8387; margin-bottom: 2rem; font-size: 0.9rem; }
+    .summary { display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center; }
+    .card {
+      padding: 1rem 2rem;
+      border-radius: 6px;
+      background: #25283D;
+      border: 1px solid #131420;
+      text-align: center;
+    }
+    .card .count { font-size: 2rem; font-weight: bold; }
+    .card .label { font-size: 0.8rem; color: #6E8387; margin-top: 0.3rem;}
+    .OK    { color: #9CE37D; }
+    .WARNING  { color: #F7DD72; }
+    .CRITICAL { color: #E3170A; }
+    .section { margin-bottom: 2rem; }
+    .section h2 { border-bottom: 1px solid #131420; padding-bottom: 0.5rem; color: #E58C8A }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th { background: #25283D; color: #6E8387; text-align: left; padding: 0.5rem; border-bottom: 1px solid #131420; }
+    td { padding: 0.5rem; border-bottom: 1px solid #1f1f1f; vertical-align: top; }
+    tr.OK       td:first-child { border-left: 3px solid #9CE37D; }
+    tr.WARNING  td:first-child { border-left: 3px solid #F7DD72; }
+    tr.CRITICAL td:first-child { border-left: 3px solid #E3170A; }
+    .no-issues { color: #9CE37D; padding: 0.5rem 0; }
+    footer { color: #1a1a1a; font-size: 0.75rem; margin-top: 3rem; border-top: 1px solid #16161a; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+
+<h1>DB Incident Report</h1>
+<div class="meta">
+  <span>Host: <b>{{ db_host }}</b></span> &nbsp;|&nbsp;
+  <span>Database: <b>{{ db_name }}</b></span> &nbsp;|&nbsp;
+  <span>Generated: <b>{{ generated_at }}</b></span> &nbsp;|&nbsp;
+  <span>Command: <b>{{ command }}</b></span>
+</div>
+
+<!-- Summary cards -->
+<div class="summary">
+  {% for section in sections %}
+  <div class="card">
+    <div class="count {{ section.overall }}">{{ section.rows | length }}</div>
+    <div class="label">{{ section.name }}</div>
+    <div class="{{ section.overall }}">{{ section.overall }}</div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Sections -->
+{% for section in sections %}
+<div class="section">
+  <h2>{{ section.name }}</h2>
+
+  {% if not section.rows %}
+    <div class="no-issues">✓ No issues detected.</div>
+
+  {% elif section.name == "Slow Queries" %}
+    <table>
+      <tr><th>Criticality</th><th>PID</th><th>Duration</th><th>State</th><th>Query</th></tr>
+      {% for r in section.rows %}
+      <tr class="{{ r.criticality }}">
+        <td class="{{ r.criticality }}">{{ r.criticality }}</td>
+        <td>{{ r.pid }}</td>
+        <td>{{ r.duration }}</td>
+        <td>{{ r.state }}</td>
+        <td>{{ r.query }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  {% elif section.name == "Lock Waits" %}
+    <table>
+      <tr><th>Criticality</th><th>PID</th><th>User</th><th>Blocked by</th><th>State</th><th>Query</th></tr>
+      {% for r in section.rows %}
+      <tr class="{{ r.criticality }}">
+        <td class="{{ r.criticality }}">{{ r.criticality }}</td>
+        <td>{{ r.pid }}</td>
+        <td>{{ r.usename }}</td>
+        <td>{{ r.blocked_by }}</td>
+        <td>{{ r.state }}</td>
+        <td>{{ r.query }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  {% elif section.name == "Table Bloat" %}
+    <table>
+      <tr><th>Criticality</th><th>Table</th><th>Dead rows</th><th>Live rows</th><th>Dead ratio</th></tr>
+      {% for r in section.rows %}
+      <tr class="{{ r.criticality }}">
+        <td class="{{ r.criticality }}">{{ r.criticality }}</td>
+        <td>{{ r.table_name }}</td>
+        <td>{{ r.dead_rows }}</td>
+        <td>{{ r.live_rows }}</td>
+        <td>{{ r.dead_ratio }}%</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% endif %}
+
+</div>
+{% endfor %}
+
+<footer>
+  DB-INCIDENT-TOOLKIT &nbsp;|&nbsp; {{ command }}
+</footer>
+
+</body>
+</html>

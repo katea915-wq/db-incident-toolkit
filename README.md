@@ -15,6 +15,7 @@ detects slow queries, lock waits, and table bloat
 **External libraries (pip install):**
 - `psycopg2-binary` — PostgreSQL connection
 - `python-dotenv` — loading environment variables from `.env`
+- `jinja2` - html template
 
 **Standard library:**
 - `argparse` — CLI arguments parsing
@@ -24,6 +25,7 @@ detects slow queries, lock waits, and table bloat
 ## Installation
 ```bash
 pip install -r requirements.txt
+pip install jinja2
 ```
 
 ## Configuration
@@ -53,6 +55,9 @@ python cli.py --check table-bloat
 
 # Run all checks
 python cli.py --check all
+
+
+#ДОБАВИТБ БЛОК С ОТЧЕТОМ  в Usage и Output=================================================
 ```
 
 ## Output
