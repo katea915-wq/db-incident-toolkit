@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DB Incident Report — medtech</title>
+  <title>DB Incident Report — incident_toolkit</title>
   <style>
     body { font-family: monospace; background: #161925; color: #e0e0e0; padding: 2rem; }
     h1 { color: #E58C8A; }
@@ -37,8 +37,8 @@
 <h1>DB Incident Report</h1>
 <div class="meta">
   <span>Host: <b>192.168.0.36</b></span> &nbsp;|&nbsp;
-  <span>Database: <b>medtech</b></span> &nbsp;|&nbsp;
-  <span>Generated: <b>2026-06-16 19:15:42</b></span> &nbsp;|&nbsp;
+  <span>Database: <b>incident_toolkit</b></span> &nbsp;|&nbsp;
+  <span>Generated: <b>2026-06-17 13:54:40</b></span> &nbsp;|&nbsp;
   <span>Command: <b>python cli.py --check all --report report.html</b></span>
 </div>
 
@@ -58,7 +58,7 @@
   </div>
   
   <div class="card">
-    <div class="count OK">6</div>
+    <div class="count OK">3</div>
     <div class="label">Table Bloat</div>
     <div class="OK">OK</div>
   </div>
@@ -76,8 +76,8 @@
       
       <tr class="OK">
         <td class="OK">OK</td>
-        <td>15444</td>
-        <td>-1 day, 23:59:59.999379</td>
+        <td>11032</td>
+        <td>-1 day, 23:59:59.999380</td>
         <td>active</td>
         <td>SELECT pid, now() - pg_stat_activity.query_start AS duration, query, state
     FROM pg_stat_activity
@@ -111,50 +111,26 @@
       
       <tr class="OK">
         <td class="OK">OK</td>
-        <td>clients</td>
+        <td>products</td>
         <td>0</td>
-        <td>0</td>
-        <td>0%</td>
+        <td>5000</td>
+        <td>0.0%</td>
       </tr>
       
       <tr class="OK">
         <td class="OK">OK</td>
-        <td>medtech_type</td>
+        <td>orders</td>
         <td>0</td>
-        <td>0</td>
-        <td>0%</td>
+        <td>12000</td>
+        <td>0.0%</td>
       </tr>
       
       <tr class="OK">
         <td class="OK">OK</td>
-        <td>manufacturers</td>
+        <td>users</td>
         <td>0</td>
-        <td>0</td>
-        <td>0%</td>
-      </tr>
-      
-      <tr class="OK">
-        <td class="OK">OK</td>
-        <td>medtech</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0%</td>
-      </tr>
-      
-      <tr class="OK">
-        <td class="OK">OK</td>
-        <td>age_groups</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0%</td>
-      </tr>
-      
-      <tr class="OK">
-        <td class="OK">OK</td>
-        <td>suppliers</td>
-        <td>0</td>
-        <td>0</td>
-        <td>0%</td>
+        <td>7000</td>
+        <td>0.0%</td>
       </tr>
       
     </table>

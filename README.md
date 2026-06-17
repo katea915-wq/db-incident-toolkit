@@ -56,8 +56,9 @@ python cli.py --check table-bloat
 # Run all checks
 python cli.py --check all
 
+# Run all check and save report in report.html
+python cli.py --report report.html
 
-#ДОБАВИТБ БЛОК С ОТЧЕТОМ  в Usage и Output=================================================
 ```
 
 ## Output
@@ -85,6 +86,8 @@ Live_rows: 5720
 ..
 
 ```
+![Report screenshot](images/img.png)
+
 ## Project structure
 
 ```
@@ -100,6 +103,8 @@ DB-INCIDENT-TOOLKIT/
 ├── cli.py                  # entry point, CLI arguments
 ├── .env.example            # environment variables template
 ├── requirements.txt        # what needs to be installed before run
+├── images/
+|   └── img.png
 └── README.md
 	
 ```
